@@ -17,7 +17,7 @@ output = ["年月,所持口数,総資産額"]
 before = 0
 
 # csvのデータを読み込み
-with open('./data.csv') as f:
+with open('./currency.csv') as f:
     list = csv.reader(f)
     num = 0;
     for line in list:
@@ -27,7 +27,7 @@ with open('./data.csv') as f:
             # continueとは繰り返しのスキップで以降の処理をさせずに次の処理を行います。
             continue
  
-        price = float(line[2])
+        price = float(line[1])
 
         if before > price :
             #所持口数の追加

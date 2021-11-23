@@ -10,6 +10,9 @@ stock = 0
 wallet = 1000.00
 #支払い額
 payment = 0
+
+#手数料
+commission = 0.00
  
 # 出力するCSV
 output = ["年月,支払額,所持口数,総資産額"]
@@ -28,11 +31,11 @@ with open('./data.csv') as f:
         price = float(line[2])
 
         #所持口数の追加
-        stock = stock + wallet / price
+        stock = stock + wallet * (1 - commission) / price
         payment = payment + wallet
 
         #CSV１行分の作成
-        output.append(line[0] + "," + str(payment)+ "," + str(stock) + "," + str(stock * price))
+        output.append(line[0] + "," + str(payment) + "," + str(stock) + "," + str(stock * price))
 
 # 作成したリストを一行ずつcsvとして出力
 for line in output:
