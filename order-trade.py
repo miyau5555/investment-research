@@ -40,7 +40,7 @@ tax = 0.2;
 output = ["年月,総資産額"]
  
 # csvのデータを読み込み
-with open('./spy-vwo-daily.csv') as f:
+with open('./data.csv') as f:
     list = csv.reader(f)
     num = 0;
     for line in list:
@@ -62,7 +62,7 @@ with open('./spy-vwo-daily.csv') as f:
                     time = 0
                     # 利益がてたら税金を引く
                     if  price * (1 - commission) > basePrice :
-                        wallet = wallet + stock * price * (1 - commission) * (1 - tax)
+                        wallet = wallet + stock * price * (1 - commission) - (basePrice - price * (1 - commission)) * stock * (1 - tax)
                     # 損が出ていれば税金は引かない
                     else :
                         wallet = wallet + stock * price * (1 - commission)
@@ -75,7 +75,7 @@ with open('./spy-vwo-daily.csv') as f:
                 time = 0
                 # 利益がてたら税金を引く
                 if price * (1 - commission) > basePrice :
-                    wallet = wallet + stock * price * (1 - commission) * (1 - tax)
+                    wallet = wallet + stock * price * (1 - commission) - (basePrice - price * (1 - commission)) * stock * (1 - tax)
                 # 損が出ていれば税金は引かない
                 else :
                     wallet = wallet + stock * price * (1 - commission)
@@ -89,7 +89,7 @@ with open('./spy-vwo-daily.csv') as f:
                     time = 0
                     # 利益がてたら税金を引く
                     if price * (1 - commission) < basePrice :
-                        wallet = wallet + (stock * basePrice - (stock * price * (1 + commission))) * (1 - tax)
+                        wallet = wallet + (stock * basePrice - (stock * price * (1 + commission))) - (price * (1 + commission) - basePrice) * stock * (1 - tax)
                     # 損が出ていれば税金は引かない
                     else :
                         wallet = wallet + stock * basePrice - (stock * price * (1 + commission))
@@ -103,7 +103,7 @@ with open('./spy-vwo-daily.csv') as f:
                 time = 0
                 # 利益がてたら税金を引く
                 if price * (1 - commission) < basePrice :
-                    wallet = wallet + (stock * basePrice - (stock * price * (1 + commission))) * (1 - tax)
+                    wallet = wallet + (stock * basePrice - (stock * price * (1 + commission))) - (price * (1 + commission) - basePrice) * stock * (1 - tax)
                 # 損が出ていれば税金は引かない
                 else :
                     wallet = wallet + stock * basePrice - (stock * price * (1 + commission))
@@ -113,6 +113,7 @@ with open('./spy-vwo-daily.csv') as f:
                 stock = round((wallet * 0.3) / price, 3)
                 wallet = wallet - wallet * 0.3
                 status = buy
+                basePrice = price
             else :
                 stock = round((wallet * 0.3) / price, 3)
                 status = sell

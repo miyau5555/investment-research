@@ -7,7 +7,7 @@ price = 0.0
 # 所持口数
 stock = 0
 # 毎月の購入金額
-wallet = 1000.00
+wallet = round(10000.00 / 192, 2)
 #支払い額
 payment = 0
 
@@ -28,7 +28,7 @@ with open('./data.csv') as f:
             # continueとは繰り返しのスキップで以降の処理をさせずに次の処理を行います。
             continue
  
-        price = float(line[2])
+        price = float(line[1])
 
         #所持口数の追加
         stock = stock + wallet * (1 - commission) / price
