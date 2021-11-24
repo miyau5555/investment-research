@@ -40,7 +40,7 @@ tax = 0.2
 output = ["年月,総資産額"]
  
 # csvのデータを読み込み
-with open('./data.csv') as f:
+with open('./spy-vwo-daily.csv') as f:
     list = csv.reader(f)
     num = 0;
     for line in list:
@@ -88,7 +88,7 @@ with open('./data.csv') as f:
                     status = none
                     time = 0
                     # 利益がてたら税金を引く
-                    if price * (1 - commission) < basePrice :
+                    if price * (1 + commission) < basePrice :
                         wallet = wallet + (stock * basePrice - (stock * price * (1 + commission))) - (basePrice - price * (1 + commission)) * stock * tax
                     # 損が出ていれば税金は引かない
                     else :
@@ -102,7 +102,7 @@ with open('./data.csv') as f:
                 status = none
                 time = 0
                 # 利益がてたら税金を引く
-                if price * (1 - commission) < basePrice :
+                if price * (1 + commission) < basePrice :
                     wallet = wallet + (stock * basePrice - (stock * price * (1 + commission))) - (basePrice - price * (1 + commission)) * stock * tax
                 # 損が出ていれば税金は引かない
                 else :
